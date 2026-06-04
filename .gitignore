@@ -1,0 +1,11 @@
+last_choice.json
+next_step.log
+self_test_result.json
+ui_preview.png
+current_prompt.json
+popup.log
+attachments/
+choices/
+prompts/
+*.tmp
+*.bak
