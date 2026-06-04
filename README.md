@@ -34,6 +34,20 @@ The default install location is:
 
 Copy the rules from `AGENTS_TEMPLATE.md` into your project `AGENTS.md` or global Codex instructions.
 
+## Wire It Into Codex
+
+Add this rule near the top of your project or global instructions:
+
+```text
+After every non-final response, first deliver the result, then call
+%USERPROFILE%\.codex\next-step\ask_next_step.ps1 with a stable -DialogName
+and dynamic -OptionsJson. The outer tool timeout must be at least 86400000 ms.
+Continue from the returned selected/custom_answer unless the custom answer
+explicitly says to end or pause.
+```
+
+The prompt is intentionally blocking. This is what keeps the conversation alive until the user replies.
+
 ## Usage
 
 ```powershell
@@ -42,6 +56,15 @@ $options = '["Check current status","Continue editing","Handle figures or materi
   -OptionsJson $options `
   -Message "Choose what to do next, or type a custom instruction" `
   -DialogName "Draft Review"
+```
+
+`-OptionsJson` can be either an array of strings or an array of objects with a `label` field:
+
+```powershell
+$options = @(
+  @{ label = "Review status"; description = "Optional agent-side detail" },
+  @{ label = "Run checks"; description = "Optional agent-side detail" }
+) | ConvertTo-Json -Depth 5 -Compress
 ```
 
 The tool writes and returns JSON like:
@@ -59,6 +82,15 @@ The tool writes and returns JSON like:
 ```
 
 When calling from Codex tool execution, set a long outer timeout such as `timeout_ms: 86400000`. Otherwise the caller may time out before the user submits the prompt.
+
+Example agent-side call shape:
+
+```json
+{
+  "command": "& \"$env:USERPROFILE\\.codex\\next-step\\ask_next_step.ps1\" -OptionsJson $options -DialogName \"Draft Review\"",
+  "timeout_ms": 86400000
+}
+```
 
 ## Read Latest Choice
 
@@ -82,6 +114,8 @@ Do not redistribute proprietary fonts unless you have the right to do so.
 Only `last_choice.json` keeps the latest full reply. Per-run choice files are temporary and are deleted after the parent process reads them. Logs store metadata such as counts and text length, not full custom text.
 
 Use `-KeepChoiceHistory` if you need full per-run JSON files for debugging.
+
+Runtime files are ignored by `.gitignore`, so accidental commits should not include prompts, choices, attachments, logs, screenshots, or the latest answer.
 
 ## Test
 
