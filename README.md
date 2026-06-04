@@ -4,11 +4,20 @@
 
 Codex Next Step is a lightweight Windows WPF prompt loop for Codex Desktop. It lets an agent deliver a result, open a native-looking next-step window, wait until the user replies, return structured JSON, and keep working without breaking flow.
 
+![Codex Next Step prompt](docs/images/next-step-window.png)
+
 ## 为什么需要它
 
 普通文本追问很容易打断节奏。用户需要手动组织下一步，助手也容易在“任务完成”后直接结束。Codex Next Step 把这一段变成一个稳定的交互界面：助手先交付结果，然后弹出下一步窗口。用户可以勾选多个方向，也可以直接输入自定义指令。提交后，助手读取 JSON 并继续执行。
 
 它适合长时间写作、代码修改、数据核查、论文处理、图表迭代和任何需要持续协作的任务。
+
+典型场景包括：
+
+- 写完一段稿件后，选择继续润色、查引用、改图表或生成 Word
+- 改完代码后，选择继续补测试、跑数据核查或检查文件状态
+- 处理图片或材料时，直接粘贴截图作为下一轮输入
+- 多个 Codex 对话同时工作时，用窗口标题区分不同对话
 
 ## 核心功能
 
@@ -135,6 +144,13 @@ $options = '["测试选项 A","测试选项 B","测试选项 C","测试选项 D"
 Codex Next Step turns every Codex Desktop handoff into a smooth, persistent next-step workflow.
 
 Instead of ending with a plain text follow-up, the agent delivers its result and opens a native-looking WPF prompt. The user can select multiple next actions, type a custom instruction, paste or drop images, and submit. The tool returns structured JSON so the agent can continue immediately.
+
+Typical use cases:
+
+- Continue editing, checking citations, handling figures, or exporting documents after a writing task
+- Run tests, inspect state, or continue implementation after a coding task
+- Paste screenshots as attachments for visual feedback
+- Keep several Codex threads moving while using dialog titles to tell prompts apart
 
 ### Highlights
 
