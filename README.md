@@ -4,6 +4,10 @@
 
 Codex Next Step is a lightweight Windows WPF prompt loop for Codex Desktop. It lets an agent deliver a result, open a native-looking next-step window, wait until the user replies, return structured JSON, and keep working without breaking flow.
 
+![Codex Next Step hero](docs/images/codex-next-step-hero.svg)
+
+真实窗口效果：
+
 ![Codex Next Step prompt](docs/images/next-step-window.png)
 
 ## 为什么需要它
